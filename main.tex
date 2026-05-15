@@ -73,7 +73,7 @@
 	language=C
 }
 
-\graphicspath{{./ilovepdf_images-extracted/}}
+\graphicspath{{./images/}}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.4\baselineskip}
@@ -629,7 +629,7 @@ Giả sử tại bước so sánh, ta có $x[0..i-1] = y[j..i+j-1] = u$ và bắ
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{img151.jpg}
+	\includegraphics[width=0.8\textwidth]{img151.jpg}
 	\caption{Dịch chuyển trong thuật toán Morris-Pratt: $v$ là border của $u$}
 \end{figure}
 
@@ -755,7 +755,7 @@ Ta gọi $\text{kmpNext}[i]$ là độ dài của tagged border của $x[0..i-1]
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{img171.jpg}
+	\includegraphics[width=0.8\textwidth]{img171.jpg}
 	\caption{Dịch chuyển trong thuật toán Knuth-Morris-Pratt: $v$ là border của $u$ và $a \neq c$}
 \end{figure}
 
@@ -1039,6 +1039,8 @@ Ta thấy thuật toán Not So Naïve gần giống với thuật toán Brute Fo
 	\caption{Lần 13: Dịch 1 bước; lần 14: Dịch 2 bước}
 \end{figure}
 
+Ta thấy thuật toán Not So Naïve thực hiện 27 phép so sánh ký tự trong ví dụ trên.
+
 \subsection{Lập trình theo thuật toán}
 
 \begin{lstlisting}[style=CStyle]
@@ -1072,7 +1074,31 @@ Thuật toán Boyer-Moore so sánh các ký tự của pattern $x$ với văn b�
 
 \textbf{Good-suffix shift:} Giả sử sự không khớp xảy ra ở cặp $a = x[i]$ và $y[i+j] = b$ trong lần thử ở vị trí $j$ của văn bản $y$. Do đó $x[i+1..m-1] = y[i+j+1..j+m-1] = u$ và $x[i] \neq y[i+j]$. Good-suffix shift dùng thẳng đoạn $y[i+j+1..j+m-1] = x[i+1..m-1] = u$ với 1 segment bên phải nhất của $x$ sao cho segment đó $= u$ và ký tự ngay trước nó khác $x[i]$. Nếu không có một segment nào như vậy thì sẽ dịch cửa sổ sao cho dùng thẳng suffix dài nhất $v$ của đoạn $y[i+j+1..j+m-1]$ với một prefix của $x$ mà match với suffix đó.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{img217.jpg}
+	\caption{Good-suffix shift trong trường hợp tìm được 1 segment trong $x$ mà ký tự $c$ ngay trước nó khác $a$}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{img218.jpg}
+	\caption{Good-suffix shift trong trường hợp không tìm được segment trong $x$ thỏa mãn yêu cầu}
+\end{figure}
+
 \textbf{Bad-character shift:} Dùng ký tự $y[i+j] = b$ của văn bản $y$ với 1 ký tự $c$ bên phải nhất của đoạn $x[0..m-2]$ sao cho $c = b$. Nếu không tìm thấy ký tự $b = y[i+j]$ trong mẫu $x$ thì ta dịch cửa sổ ra ngay sau ký tự $b$ tức cửa sổ bắt đầu ở ký tự $y[i+j+1]$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{img219.jpg}
+	\caption{Bad-character shift trong trường hợp tìm thấy một ký tự $b$ trong $x$ thỏa mãn yêu cầu}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{img220.jpg}
+	\caption{Bad-character shift trong trường hợp không tìm thấy ký tự $b$ trong $x$}
+\end{figure}
 
 Với mỗi lần thử ta có 2 cách dịch chuyển cửa sổ là good-suffix shift và bad-character shift. Đối với bad-character shift, cửa sổ có thể bị dịch lại (dịch sang trái). Ta sẽ chọn cách dịch chuyển mà dịch cửa sổ sang phải nhiều nhất.
 
@@ -1121,6 +1147,8 @@ $\text{bmGs}[i]$ & 7 & 7 & 7 & 2 & 7 & 4 & 7 & 1 \\
 	\includegraphics[width=0.9\textwidth]{img243.jpg}
 	\caption{Lần 4--5: Kết thúc}
 \end{figure}
+
+Ta thấy thuật toán Boyer-Moore thực hiện 17 phép so sánh ký tự trong ví dụ trên.
 
 \subsection{Lập trình theo thuật toán}
 
@@ -1193,6 +1221,38 @@ Như vậy ta thấy rằng nếu $|v| \geq |u|$, ta so sánh good-suffix shift 
 	\item Pha tiền xử lý: $O(m + \sigma)$.
 	\item Pha tìm kiếm: $O(n)$.
 \end{itemize}
+
+\subsection{Kiểm nghiệm thuật toán}
+
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$a$ & A & C & G & T \\
+\hline
+$\text{qsBc}[a]$ & 2 & 7 & 1 & 9 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{img251.jpg}
+	\caption{Lần 1: Dịch 3 bước}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{img252.jpg}
+	\caption{Lần 2: Dịch 2 bước; lần 3: Dịch 2 bước; lần 4: OUTPUT(5), dịch 9 bước}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{img257.jpg}
+	\caption{Lần 5: Dịch 7 bước}
+\end{figure}
+
+Ta thấy thuật toán Turbo-Boyer-Moore thực hiện 15 phép so sánh ký tự trong ví dụ trên.
 
 \subsection{Lập trình theo thuật toán}
 
@@ -1289,6 +1349,8 @@ $a$ & A & C & G & T \\
 	\caption{Lần 5: Kết thúc}
 \end{figure}
 
+Ta thấy thuật toán Quick Search thực hiện 15 phép so sánh ký tự trong ví dụ trên.
+
 \subsection{Lập trình theo thuật toán}
 
 \begin{lstlisting}[style=CStyle]
@@ -1321,7 +1383,11 @@ void QS(char *x, int m, char *y, int n) {
 
 \subsection{Trình bày thuật toán}
 
-Tuned-Boyer-Moore là phiên bản đơn giản hóa của thuật toán Boyer-Moore. Dễ cài đặt và rất nhanh trong thực tế. Phần tốn chi phí nhất trong các thuật toán đối sánh mẫu là kiểm tra xem liệu ký tự trong mẫu có khớp với ký tự trong cửa sổ không. Để tránh việc kiểm tra này nhiều lần, Tuned-Boyer-Moore sẽ dịch chuyển cửa sổ một số lần trước khi thực sự so sánh ký tự. Thuật toán sử dụng bad-character shift để tìm ký tự $x[m-1]$ trong $y$. Thuật toán sẽ tiếp tục dịch chuyển cửa sổ cho đến khi tìm thấy $x[m-1]$ trong $y$. Thuật toán yêu cầu lưu giá trị của $\text{bmBc}[x[m-1]]$ vào biến \texttt{shift}, và sau đó đặt lại $\text{bmBc}[x[m-1]] = 0$. Khi $x[m-1]$ được tìm thấy trong $y$, $m-1$ ký tự còn lại được kiểm tra và sau đó dịch cửa sổ một đoạn \texttt{shift}.
+Tuned-Boyer-Moore là phiên bản đơn giản hóa của thuật toán Boyer-Moore, dễ cài đặt và rất nhanh trong thực tế.
+
+Phần tốn chi phí nhất trong các thuật toán đối sánh mẫu là kiểm tra xem liệu ký tự trong mẫu có khớp với ký tự trong cửa sổ không. Để tránh việc kiểm tra này nhiều lần, Tuned-Boyer-Moore sẽ dịch chuyển cửa sổ một số lần trước khi thực sự so sánh ký tự.
+
+Thuật toán sử dụng bad-character shift để tìm ký tự $x[m-1]$ trong $y$. Thuật toán sẽ tiếp tục dịch chuyển cửa sổ cho đến khi tìm thấy $x[m-1]$ trong $y$. Thuật toán yêu cầu lưu giá trị của $\text{bmBc}[x[m-1]]$ vào biến \texttt{shift}, và sau đó đặt lại $\text{bmBc}[x[m-1]] = 0$. Khi $x[m-1]$ được tìm thấy trong $y$, $m-1$ ký tự còn lại được kiểm tra và sau đó dịch cửa sổ một đoạn \texttt{shift}.
 
 \subsection{Đánh giá độ phức tạp thuật toán}
 
@@ -1330,6 +1396,18 @@ Tuned-Boyer-Moore là phiên bản đơn giản hóa của thuật toán Boyer-M
 \end{itemize}
 
 \subsection{Kiểm nghiệm thuật toán}
+
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$, $\texttt{shift} = 2$:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$a$ & A & C & G & T \\
+\hline
+$\text{bmBc}[a]$ & 1 & 6 & 0 & 8 \\
+\hline
+\end{tabular}
+\end{center}
 
 \begin{figure}[H]
 	\centering
