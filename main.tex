@@ -73,6 +73,26 @@
 	language=C
 }
 
+\lstdefinestyle{PythonStyle}{
+	backgroundcolor=\color{backgroundColour},
+	commentstyle=\color{mGreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{mGray},
+	stringstyle=\color{mPurple},
+	basicstyle=\footnotesize\ttfamily,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=4,
+	language=Python
+}
+
 \graphicspath{{./images/}}
 
 \setlength{\parindent}{0pt}
@@ -182,7 +202,7 @@ Giả sử ta có 2 mảng ký tự $y$ và $x$. Ta tiến hành tìm mảng $x$
 	\item $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$, độ dài $n = 24$
 \end{itemize}
 
-Pha tìm kiếm (các bước so sánh từ trái sang phải):
+Pha tìm kiếm:
 
 \begin{figure}[H]
 	\centering
@@ -192,77 +212,77 @@ Pha tìm kiếm (các bước so sánh từ trái sang phải):
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img58.jpg}
-	\caption{Lần 2}
+	\caption{Lần 2: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img59.jpg}
-	\caption{Lần 3}
+	\caption{Lần 3: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img60.jpg}
-	\caption{Lần 4}
+	\caption{Lần 4: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img61.jpg}
-	\caption{Lần 5}
+	\caption{Lần 5: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img62.jpg}
-	\caption{Lần 6: Tìm thấy $x$ tại vị trí 5}
+	\caption{Lần 6: OUTPUT(5)}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img63.jpg}
-	\caption{Lần 7}
+	\caption{Lần 7: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img66.jpg}
-	\caption{Lần 8}
+	\caption{Lần 8: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img67.jpg}
-	\caption{Lần 9}
+	\caption{Lần 9: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img68.jpg}
-	\caption{Lần 10}
+	\caption{Lần 10: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img69.jpg}
-	\caption{Lần 11}
+	\caption{Lần 11: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img70.jpg}
-	\caption{Lần 12}
+	\caption{Lần 12: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img71.jpg}
-	\caption{Lần 13}
+	\caption{Lần 13: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img72.jpg}
-	\caption{Lần 14}
+	\caption{Lần 14: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img91.jpg}
-	\caption{Lần 15}
+	\caption{Lần 15: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img92.jpg}
-	\caption{Lần 16}
+	\caption{Lần 16: Dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
@@ -274,15 +294,12 @@ Vậy ta thấy chỉ có lần 6 là tìm thấy mảng $x$ trong mảng $y$. T
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void BF(char *x, int m, char *y, int n) {
-    int i, j;
-    for (j = 0; j <= n - m; ++j) {
-        for (i = 0; i < m && x[i] == y[i + j]; ++i);
-        if (i >= m)
-            printf("%d\n", j);
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def BF(x, y):
+    m, n = len(x), len(y)
+    for j in range(n - m + 1):
+        if y[j:j + m] == x:
+            print(j)
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -324,24 +341,6 @@ Pha tiền xử lý -- tính DFA:
 
 Hàm chuyển tiếp $\delta(q, c)$:
 
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
- & $\epsilon$ & $a$ & $ab$ & $aba$ & $\textcolor{red}{abaa}$ \\
-\hline
-$a$ & $a$ & $a$ & $aba$ & $\textcolor{red}{abaa}$ & $a$ \\
-\hline
-$b$ & $\epsilon$ & $ab$ & $\epsilon$ & $ab$ & $ab$ \\
-\hline
-\end{tabular}
-\end{center}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.9\textwidth]{img102.jpg}
-	\caption{Sơ đồ DFA cho mẫu $x = \texttt{abaa}$}
-\end{figure}
-
 \[
 q_{\text{next}} = \delta(q_{\text{curr}},\, c) =
 \]
@@ -356,6 +355,12 @@ $aba$ & \textcolor{red}{$abaa$} & $ab$ \\
 \textcolor{red}{$abaa$} & $a$ & $ab$ \\
 \end{tabular}
 \end{center}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{img102.jpg}
+	\caption{Sơ đồ DFA cho mẫu $x = \texttt{abaa}$}
+\end{figure}
 
 Pha tìm kiếm:
 
@@ -384,43 +389,31 @@ Tại bước thứ 11, thuật toán đã tìm thấy mẫu $x$ trong văn bả
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-#define MAX 256
+\begin{lstlisting}[style=PythonStyle]
+def get_next_state(pat, m, state, c):
+    if state < m and c == pat[state]:
+        return state + 1
+    for ns in range(state, 0, -1):
+        if pat[ns - 1] == c and pat[:ns - 1] == pat[state - ns + 1:state]:
+            return ns
+    return 0
 
-int getNextState(char *pat, int m, int state, int x) {
-    int ns, i;
-    if (state < m && x == pat[state])
-        return state + 1;
-    for (ns = state; ns > 0; ns--) {
-        if (pat[ns - 1] == x) {
-            for (i = 0; i < ns - 1; i++)
-                if (pat[i] != pat[state - ns + 1 + i])
-                    break;
-            if (i == ns - 1)
-                return ns;
-        }
-    }
-    return 0;
-}
+def compute_tf(pat):
+    m = len(pat)
+    tf = [[0] * 256 for _ in range(m + 1)]
+    for state in range(m + 1):
+        for c in range(256):
+            tf[state][c] = get_next_state(pat, m, state, chr(c))
+    return tf
 
-void computeTF(char *pat, int m, int TF[][MAX]) {
-    int state, x;
-    for (state = 0; state <= m; state++)
-        for (x = 0; x < MAX; x++)
-            TF[state][x] = getNextState(pat, m, state, x);
-}
-
-void finite_automata(char *pat, char *txt) {
-    int i, state = 0;
-    int m = strlen(pat), n = strlen(txt);
-    int TF[m + 1][MAX];
-    computeTF(pat, m, TF);
-    for (i = 0; i <= n; i++) {
-        state = TF[state][(unsigned char)txt[i]];
-        if (state >= m)
-            printf("Position: %d\n", i - m + 1);
-    }
-}
+def finite_automata(pat, txt):
+    m, n = len(pat), len(txt)
+    tf = compute_tf(pat)
+    state = 0
+    for i in range(n):
+        state = tf[state][ord(txt[i])]
+        if state >= m:
+            print(i - m + 1)
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -454,6 +447,8 @@ Với $x = \texttt{GCAGAGAG}$ ($m = 8$) và $y = \texttt{GCATCGCAGAGAGTATACAGTAC
 
 Giá trị băm của mẫu: $\text{hash}(\texttt{GCAGAGAG}) = 17597$.
 
+Pha tìm kiếm:
+
 \begin{center}
 \begin{tabular}{|c|l|c|c|}
 \hline
@@ -484,29 +479,21 @@ Thuật toán thực hiện 17 lần so sánh giá trị băm và 8 lần so sá
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-#define REHASH(a, b, h, d) ((((h) - (a)*(d)) << 1) + (b))
-
-void KR(char *x, int m, char *y, int n) {
-    int d, hx, hy, i, j;
-
-    /* Preprocessing */
-    for (d = i = 1; i < m; ++i)
-        d = (d << 1);
-    for (hx = hy = i = 0; i < m; ++i) {
-        hx = ((hx << 1) + x[i]);
-        hy = ((hy << 1) + y[i]);
-    }
-
-    /* Searching */
-    j = 0;
-    while (j <= n - m) {
-        if (hx == hy && memcmp(x, y + j, m) == 0)
-            OUTPUT(j);
-        hy = REHASH(y[j], y[j + m], hy, d);
-        ++j;
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def KR(x, y):
+    m, n = len(x), len(y)
+    d = 1 << (m - 1)
+    hx = hy = 0
+    for i in range(m):
+        hx = (hx << 1) + ord(x[i])
+        hy = (hy << 1) + ord(y[i])
+    j = 0
+    while j <= n - m:
+        if hx == hy and x == y[j:j + m]:
+            print(j)
+        if j + m < n:
+            hy = ((hy - ord(y[j]) * d) << 1) + ord(y[j + m])
+        j += 1
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -538,7 +525,9 @@ Thuật toán Shift Or sử dụng kỹ thuật bitwise. Sử dụng 2 loại bi
 
 Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
 
-Tính các véc tơ $S_c$:
+Pha tiền xử lý:
+
+Bảng các véc tơ $S_c$:
 
 \begin{center}
 \begin{tabular}{|c|cccc|}
@@ -557,7 +546,9 @@ G & 1 & 1 & 0 & 1 \\
 \end{tabular}
 \end{center}
 
-Bảng các véc tơ $R_j$ (hàng = bit $i$ của mẫu, cột = vị trí $j$ trong văn bản):
+Pha tìm kiếm:
+
+Bảng các véc tơ $R_j$:
 
 \begin{center}
 \setlength{\tabcolsep}{4pt}
@@ -583,36 +574,26 @@ Ta thấy $R_{12}[7] = 0$ có nghĩa rằng tìm thấy $x$ ở vị trí $12 - 
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-#define ASIZE 256
-#define WORD   32
-
-int preSo(char *x, int m, unsigned int S[]) {
-    unsigned int j, lim;
-    int i;
-    for (i = 0; i < ASIZE; ++i)
-        S[i] = ~0;
-    for (lim = i = 0, j = 1; i < m; ++i, j <<= 1) {
-        S[(unsigned char)x[i]] &= ~j;
-        lim |= j;
-    }
-    lim = ~(lim >> 1);
-    return lim;
-}
-
-void SO(char *x, int m, char *y, int n) {
-    unsigned int lim, state;
-    unsigned int S[ASIZE];
-    int j;
-    if (m > WORD)
-        return;
-    lim = preSo(x, m, S);
-    for (state = ~0, j = 0; j < n; ++j) {
-        state = (state << 1) | S[(unsigned char)y[j]];
-        if (state < lim)
-            OUTPUT(j - m + 1);
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def SO(x, y):
+    m, n = len(x), len(y)
+    MASK = (1 << 32) - 1
+    S = {}
+    lim = j_bit = 0
+    j_bit = 1
+    for i in range(m):
+        c = x[i]
+        S.setdefault(c, MASK)
+        S[c] = (S[c] & ~j_bit) & MASK
+        lim = (lim | j_bit) & MASK
+        j_bit = (j_bit << 1) & MASK
+    lim = (~(lim >> 1)) & MASK
+    state = MASK
+    for j in range(n):
+        c = y[j]
+        state = ((state << 1) | S.get(c, MASK)) & MASK
+        if state < lim:
+            print(j - m + 1)
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -646,7 +627,9 @@ Gọi $\text{mpNext}[i]$ là độ dài của border của $x[0..i-1]$ ($0 < i \
 
 Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
 
-Bảng $\text{mpNext}[i]$:
+Pha tiền xử lý:
+
+Bảng $\text{mpNext}[i]$ -- độ dài border của $x[0..i-1]$:
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
@@ -659,6 +642,8 @@ $\text{mpNext}[i]$ & $-1$ & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 1 \\
 \hline
 \end{tabular}
 \end{center}
+
+Pha tìm kiếm:
 
 \begin{figure}[H]
 	\centering
@@ -710,33 +695,31 @@ Thuật toán Morris-Pratt thực hiện 19 lần so sánh ký tự trong ví d�
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void preMp(char *x, int m, int mpNext[]) {
-    int i, j;
-    i = 0;
-    j = mpNext[0] = -1;
-    while (i < m) {
-        while (j > -1 && x[i] != x[j])
-            j = mpNext[j];
-        mpNext[++i] = ++j;
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_mp(x):
+    m = len(x)
+    mp_next = [-1] + [0] * m
+    i, j = 0, -1
+    while i < m:
+        while j > -1 and x[i] != x[j]:
+            j = mp_next[j]
+        i += 1
+        j += 1
+        mp_next[i] = j
+    return mp_next
 
-void MP(char *x, int m, char *y, int n) {
-    int i, j, mpNext[XSIZE];
-    preMp(x, m, mpNext);
-    i = j = 0;
-    while (j < n) {
-        while (i > -1 && x[i] != y[j])
-            i = mpNext[i];
-        i++;
-        j++;
-        if (i >= m) {
-            OUTPUT(j - i);
-            i = mpNext[i];
-        }
-    }
-}
+def MP(x, y):
+    m, n = len(x), len(y)
+    mp_next = pre_mp(x)
+    i = j = 0
+    while j < n:
+        while i > -1 and x[i] != y[j]:
+            i = mp_next[i]
+        i += 1
+        j += 1
+        if i >= m:
+            print(j - i)
+            i = mp_next[i]
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -770,7 +753,9 @@ Ta gọi $\text{kmpNext}[i]$ là độ dài của tagged border của $x[0..i-1]
 
 Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
 
-Bảng $\text{kmpNext}[i]$:
+Pha tiền xử lý:
+
+Bảng $\text{kmpNext}[i]$ -- tagged border của $x[0..i-1]$:
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
@@ -783,6 +768,8 @@ $\text{kmpNext}[i]$ & $-1$ & 0 & 0 & $-1$ & 1 & $-1$ & 1 & $-1$ & 1 \\
 \hline
 \end{tabular}
 \end{center}
+
+Pha tìm kiếm:
 
 \begin{figure}[H]
 	\centering
@@ -829,38 +816,34 @@ Thuật toán KMP thực hiện 18 lần so sánh ký tự trong ví dụ trên.
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void preKmp(char *x, int m, int kmpNext[]) {
-    int i, j;
-    i = 0;
-    j = kmpNext[0] = -1;
-    while (i < m) {
-        while (j > -1 && x[i] != x[j])
-            j = kmpNext[j];
-        i++;
-        j++;
-        if (x[i] == x[j])
-            kmpNext[i] = kmpNext[j];
-        else
-            kmpNext[i] = j;
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_kmp(x):
+    m = len(x)
+    kmp_next = [-1] + [0] * m
+    i, j = 0, -1
+    while i < m:
+        while j > -1 and x[i] != x[j]:
+            j = kmp_next[j]
+        i += 1
+        j += 1
+        if i < m and x[i] == x[j]:
+            kmp_next[i] = kmp_next[j]
+        else:
+            kmp_next[i] = j
+    return kmp_next
 
-void KMP(char *x, int m, char *y, int n) {
-    int i, j, kmpNext[XSIZE];
-    preKmp(x, m, kmpNext);
-    i = j = 0;
-    while (j < n) {
-        while (i > -1 && x[i] != y[j])
-            i = kmpNext[i];
-        i++;
-        j++;
-        if (i >= m) {
-            OUTPUT(j - i);
-            i = kmpNext[i];
-        }
-    }
-}
+def KMP(x, y):
+    m, n = len(x), len(y)
+    kmp_next = pre_kmp(x)
+    i = j = 0
+    while j < n:
+        while i > -1 and x[i] != y[j]:
+            i = kmp_next[i]
+        i += 1
+        j += 1
+        if i >= m:
+            print(j - i)
+            i = kmp_next[i]
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -899,8 +882,14 @@ Ban đầu bộ ba được khởi tạo $(i, j, k) = (\ell, 0, 0)$. Cách tính
 		\item Nếu $x[i] = y[i+j]$ thì bộ ba tiếp theo là $(i+1,\; j,\; k)$.
 		\item Nếu $x[i] \neq y[i+j]$, xét $\text{kmpNext}[i]$:
 		\begin{itemize}
-			\item Nếu $\text{kmpNext}[i] \leq \ell$: bộ ba tiếp theo là $\bigl(\ell,\; i+j-\text{kmpNext}[i],\; \max\{0,\, \text{kmpNext}[i]\}\bigr)$.
-			\item Nếu $\text{kmpNext}[i] > \ell$: bộ ba tiếp theo là $\bigl(\text{kmpNext}[i],\; i+j-\text{kmpNext}[i],\; \ell\bigr)$.
+			\item Nếu $\text{kmpNext}[i] \leq \ell$: bộ ba tiếp theo là
+			\[
+				\bigl(\ell,\; i+j-\text{kmpNext}[i],\; \max\{0,\, \text{kmpNext}[i]\}\bigr).
+			\]
+			\item Nếu $\text{kmpNext}[i] > \ell$: bộ ba tiếp theo là
+			\[
+				\bigl(\text{kmpNext}[i],\; i+j-\text{kmpNext}[i],\; \ell\bigr).
+			\]
 		\end{itemize}
 	\end{itemize}
 	\item \textbf{Trường hợp $i = m$:}
@@ -919,7 +908,11 @@ Ban đầu bộ ba được khởi tạo $(i, j, k) = (\ell, 0, 0)$. Cách tính
 
 \subsection{Kiểm nghiệm thuật toán}
 
-Bảng $\text{kmpNext}$ với $x = \texttt{GCAGAGAG}$, $\ell = 1$:
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng $\text{kmpNext}[i]$ với $\ell = 1$:
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
@@ -932,6 +925,8 @@ $\text{kmpNext}[i]$ & $-1$ & 0 & 0 & $-1$ & 1 & $-1$ & 1 & $-1$ & 1 \\
 \hline
 \end{tabular}
 \end{center}
+
+Pha tìm kiếm:
 
 \begin{figure}[H]
 	\centering
@@ -951,41 +946,55 @@ $\text{kmpNext}[i]$ & $-1$ & 0 & 0 & $-1$ & 1 & $-1$ & 1 & $-1$ & 1 \\
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img199.jpg}
-	\caption{Lần 8: Dịch 3 bước}
+	\caption{Lần 8: Dịch 3 bước -- Kết thúc}
 \end{figure}
 
 Thuật toán Apostolico-Crochemore thực hiện 20 phép so sánh ký tự trong ví dụ trên.
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void AC(char *x, int m, char *y, int n) {
-    int i, j, k, ell, kmpNext[XSIZE];
-    preKmp(x, m, kmpNext);
-    for (ell = 1; ell < m && x[ell - 1] == x[ell]; ell++);
-    if (ell == m) ell = 0;
-    i = ell;
-    j = k = 0;
-    while (j <= n - m) {
-        while (i < m && x[i] == y[i + j])
-            ++i;
-        if (i >= m) {
-            while (k < ell && x[k] == y[j + k])
-                ++k;
-            if (k >= ell)
-                OUTPUT(j);
-        }
-        if (i == ell || kmpNext[i] <= ell) {
-            j += (i - kmpNext[i]);
-            i = ell;
-            k = (k > 0) ? k - 1 : 0;
-        } else {
-            j += (i - kmpNext[i]);
-            k = (kmpNext[i] > ell) ? ell : kmpNext[i];
-            i = kmpNext[i];
-        }
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_kmp(x):
+    m = len(x)
+    kmp_next = [-1] + [0] * m
+    i, j = 0, -1
+    while i < m:
+        while j > -1 and x[i] != x[j]:
+            j = kmp_next[j]
+        i += 1
+        j += 1
+        if i < m and x[i] == x[j]:
+            kmp_next[i] = kmp_next[j]
+        else:
+            kmp_next[i] = j
+    return kmp_next
+
+def AC(x, y):
+    m, n = len(x), len(y)
+    kmp_next = pre_kmp(x)
+    ell = 1
+    while ell < m and x[ell - 1] == x[ell]:
+        ell += 1
+    if ell == m:
+        ell = 0
+    i = ell
+    j = k = 0
+    while j <= n - m:
+        while i < m and x[i] == y[i + j]:
+            i += 1
+        if i >= m:
+            while k < ell and x[k] == y[j + k]:
+                k += 1
+            if k >= ell:
+                print(j)
+        if i == ell or kmp_next[i] <= ell:
+            j += i - kmp_next[i]
+            i = ell
+            k = k - 1 if k > 0 else 0
+        else:
+            j += i - kmp_next[i]
+            k = ell if kmp_next[i] > ell else kmp_next[i]
+            i = kmp_next[i]
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -1013,6 +1022,10 @@ Ta thấy thuật toán Not So Naïve gần giống với thuật toán Brute Fo
 
 \subsection{Kiểm nghiệm thuật toán}
 
+Từ mẫu $x = \texttt{GCAGAGAG}$ ta tính được $k = 1$, $\ell = 2$.
+
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img206.jpg}
@@ -1036,30 +1049,28 @@ Ta thấy thuật toán Not So Naïve gần giống với thuật toán Brute Fo
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img214.jpg}
-	\caption{Lần 13: Dịch 1 bước; lần 14: Dịch 2 bước}
+	\caption{Lần 13: Dịch 1 bước; lần 14: Dịch 2 bước -- Kết thúc}
 \end{figure}
 
 Ta thấy thuật toán Not So Naïve thực hiện 27 phép so sánh ký tự trong ví dụ trên.
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void NSN(char *x, int m, char *y, int n) {
-    int j, k, ell;
-    if (x[0] == x[1]) { k = 2; ell = 1; }
-    else               { k = 1; ell = 2; }
-    j = 0;
-    while (j <= n - m) {
-        if (x[1] != y[j + 1])
-            j += k;
-        else {
-            if (memcmp(x + 2, y + j + 2, m - 2) == 0 &&
-                x[0] == y[j])
-                OUTPUT(j);
-            j += ell;
-        }
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def NSN(x, y):
+    m, n = len(x), len(y)
+    if x[0] == x[1]:
+        k, ell = 2, 1
+    else:
+        k, ell = 1, 2
+    j = 0
+    while j <= n - m:
+        if x[1] != y[j + 1]:
+            j += k
+        else:
+            if x[2:] == y[j + 2:j + m] and x[0] == y[j]:
+                print(j)
+            j += ell
 \end{lstlisting}
 
 %=============================================================
@@ -1113,6 +1124,10 @@ Với mỗi lần thử ta có 2 cách dịch chuyển cửa sổ là good-suffi
 
 Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
 
+Pha tiền xử lý:
+
+Bảng bad-character shift $\text{bmBc}[a]$ -- khoảng cách từ vị trí xuất hiện phải nhất của $a$ trong $x[0..m-2]$ đến cuối mẫu:
+
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -1122,6 +1137,8 @@ $a$ & A & C & G & T \\
 \hline
 \end{tabular}
 \end{center}
+
+Bảng good-suffix shift $\text{bmGs}[i]$:
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
@@ -1137,10 +1154,12 @@ $\text{bmGs}[i]$ & 7 & 7 & 7 & 2 & 7 & 4 & 7 & 1 \\
 \end{tabular}
 \end{center}
 
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img242.jpg}
-	\caption{Lần 1--3: Lần 3 OUTPUT(5)}
+	\caption{Lần 1--3: OUTPUT(5) ở lần 3}
 \end{figure}
 \begin{figure}[H]
 	\centering
@@ -1152,37 +1171,62 @@ Ta thấy thuật toán Boyer-Moore thực hiện 17 phép so sánh ký tự tro
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void preBmGs(char *x, int m, int bmGs[]) {
-    int i, j, suff[XSIZE];
-    suffixes(x, m, suff);
-    for (i = 0; i < m; ++i)
-        bmGs[i] = m;
-    j = 0;
-    for (i = m - 1; i >= 0; --i)
-        if (suff[i] == i + 1)
-            for (; j < m - 1 - i; ++j)
-                if (bmGs[j] == m)
-                    bmGs[j] = m - 1 - i;
-    for (i = 0; i <= m - 2; ++i)
-        bmGs[m - 1 - suff[i]] = m - 1 - i;
-}
+\begin{lstlisting}[style=PythonStyle]
+def suffixes(x):
+    m = len(x)
+    suff = [0] * m
+    suff[m - 1] = m
+    g = m - 1
+    f = 0
+    for i in range(m - 2, -1, -1):
+        if i > g and suff[i + m - 1 - f] < i - g:
+            suff[i] = suff[i + m - 1 - f]
+        else:
+            if i < g:
+                g = i
+            f = i
+            while g >= 0 and x[g] == x[g + m - 1 - f]:
+                g -= 1
+            suff[i] = f - g
+    return suff
 
-void BM(char *x, int m, char *y, int n) {
-    int i, j, bmGs[XSIZE], bmBc[ASIZE];
-    preBmGs(x, m, bmGs);
-    preBmBc(x, m, bmBc);
-    j = 0;
-    while (j <= n - m) {
-        for (i = m - 1; i >= 0 && x[i] == y[i + j]; --i);
-        if (i < 0) {
-            OUTPUT(j);
-            j += bmGs[0];
-        } else
-            j += MAX(bmGs[i],
-                     bmBc[(unsigned char)y[i+j]] - m + 1 + i);
-    }
-}
+def pre_bm_gs(x):
+    m = len(x)
+    suff = suffixes(x)
+    bm_gs = [m] * m
+    j = 0
+    for i in range(m - 1, -1, -1):
+        if suff[i] == i + 1:
+            while j < m - 1 - i:
+                if bm_gs[j] == m:
+                    bm_gs[j] = m - 1 - i
+                j += 1
+    for i in range(m - 1):
+        bm_gs[m - 1 - suff[i]] = m - 1 - i
+    return bm_gs
+
+def pre_bm_bc(x):
+    m = len(x)
+    bm_bc = {}
+    for i in range(m):
+        bm_bc[x[i]] = m - 1 - i
+    return bm_bc
+
+def BM(x, y):
+    m, n = len(x), len(y)
+    bm_gs = pre_bm_gs(x)
+    bm_bc = pre_bm_bc(x)
+    j = 0
+    while j <= n - m:
+        i = m - 1
+        while i >= 0 and x[i] == y[i + j]:
+            i -= 1
+        if i < 0:
+            print(j)
+            j += bm_gs[0]
+        else:
+            j += max(bm_gs[i],
+                     bm_bc.get(y[i + j], m) - m + 1 + i)
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -1226,6 +1270,10 @@ Như vậy ta thấy rằng nếu $|v| \geq |u|$, ta so sánh good-suffix shift 
 
 Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
 
+Pha tiền xử lý:
+
+Bảng quick search bad-character shift $\text{qsBc}[a]$ -- khoảng cách từ vị trí xuất hiện phải nhất của $a$ trong toàn bộ $x$ đến cuối mẫu cộng 1:
+
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -1235,6 +1283,8 @@ $\text{qsBc}[a]$ & 2 & 7 & 1 & 9 \\
 \hline
 \end{tabular}
 \end{center}
+
+Pha tìm kiếm:
 
 \begin{figure}[H]
 	\centering
@@ -1249,49 +1299,65 @@ $\text{qsBc}[a]$ & 2 & 7 & 1 & 9 \\
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img257.jpg}
-	\caption{Lần 5: Dịch 7 bước}
+	\caption{Lần 5: Dịch 7 bước -- Kết thúc}
 \end{figure}
 
 Ta thấy thuật toán Turbo-Boyer-Moore thực hiện 15 phép so sánh ký tự trong ví dụ trên.
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void TBM(char *x, int m, char *y, int n) {
-    int bcShift, i, j, shift, u, v, turboShift;
-    int bmGs[XSIZE], bmBc[ASIZE];
-    preBmGs(x, m, bmGs);
-    preBmBc(x, m, bmBc);
-    j = u = 0;
-    shift = m;
-    while (j <= n - m) {
-        i = m - 1;
-        while (i >= 0 && x[i] == y[i + j]) {
-            --i;
-            if (u != 0 && i == m - 1 - shift)
-                i -= u;
-        }
-        if (i < 0) {
-            OUTPUT(j);
-            shift = bmGs[0];
-            u = m - shift;
-        } else {
-            v = m - 1 - i;
-            turboShift = u - v;
-            bcShift = bmBc[(unsigned char)y[i+j]] - m + 1 + i;
-            shift = MAX(turboShift, bcShift);
-            shift = MAX(shift, bmGs[i]);
-            if (shift == bmGs[i])
-                u = MIN(m - shift, v);
-            else {
-                if (turboShift < bcShift)
-                    shift = MAX(shift, u + 1);
-                u = 0;
-            }
-        }
-        j += shift;
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_bm_gs(x):
+    m = len(x)
+    suff = suffixes(x)
+    bm_gs = [m] * m
+    j = 0
+    for i in range(m - 1, -1, -1):
+        if suff[i] == i + 1:
+            while j < m - 1 - i:
+                if bm_gs[j] == m:
+                    bm_gs[j] = m - 1 - i
+                j += 1
+    for i in range(m - 1):
+        bm_gs[m - 1 - suff[i]] = m - 1 - i
+    return bm_gs
+
+def pre_bm_bc(x):
+    m = len(x)
+    bm_bc = {}
+    for i in range(m):
+        bm_bc[x[i]] = m - 1 - i
+    return bm_bc
+
+def TBM(x, y):
+    m, n = len(x), len(y)
+    bm_gs = pre_bm_gs(x)
+    bm_bc = pre_bm_bc(x)
+    j = u = 0
+    shift = m
+    while j <= n - m:
+        i = m - 1
+        while i >= 0 and x[i] == y[i + j]:
+            i -= 1
+            if u != 0 and i == m - 1 - shift:
+                i -= u
+        if i < 0:
+            print(j)
+            shift = bm_gs[0]
+            u = m - shift
+        else:
+            v = m - 1 - i
+            turbo_shift = u - v
+            bc_shift = bm_bc.get(y[i + j], m) - m + 1 + i
+            shift = max(turbo_shift, bc_shift)
+            shift = max(shift, bm_gs[i])
+            if shift == bm_gs[i]:
+                u = min(m - shift, v)
+            else:
+                if turbo_shift < bc_shift:
+                    shift = max(shift, u + 1)
+                u = 0
+        j += shift
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -1300,7 +1366,7 @@ void TBM(char *x, int m, char *y, int n) {
 
 \subsection{Trình bày thuật toán}
 
-Là phiên bản đơn giản hóa của thuật toán Boyer-Moore. Chỉ sử dụng bad-character shift. Dễ dàng cài đặt.
+Là phiên bản đơn giản hóa của thuật toán Boyer-Moore, chỉ sử dụng bad-character shift, dễ dàng cài đặt.
 
 Ta thấy rằng sau mỗi lần thử (tức cửa sổ được đặt ở đoạn $y[j..j+m-1]$ của text), độ dài dịch chuyển ít nhất phải bằng 1, vậy nên ký tự $y[j+m]$ đương nhiên sẽ được xét trong lần thử tiếp theo. Và vì vậy $y[j+m]$ có thể được sử dụng cho bad-character shift của lần thử hiện tại. Bad-character shift của thuật toán này được sửa đổi một chút như sau:
 
@@ -1322,7 +1388,9 @@ Như vậy trong mỗi lần thử tại đoạn $y[j..j+m-1]$, nếu không mat
 
 \subsection{Kiểm nghiệm thuật toán}
 
-Bảng qsBc cho $x = \texttt{GCAGAGAG}$:
+Pha tiền xử lý:
+
+Bảng $\text{qsBc}[a]$ -- quick search bad-character shift dựa vào ký tự liền sau cửa sổ $y[j+m]$:
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -1332,6 +1400,8 @@ $a$ & A & C & G & T \\
 \hline
 \end{tabular}
 \end{center}
+
+Pha tìm kiếm:
 
 \begin{figure}[H]
 	\centering
@@ -1353,28 +1423,25 @@ Ta thấy thuật toán Quick Search thực hiện 15 phép so sánh ký tự tr
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void preQsBc(char *x, int m, int qsBc[]) {
-    int i;
-    for (i = 0; i < ASIZE; ++i)
-        qsBc[i] = m + 1;
-    for (i = 0; i < m; ++i)
-        qsBc[(unsigned char)x[i]] = m - i;
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_qs_bc(x):
+    m = len(x)
+    qs_bc = {}
+    for i in range(m):
+        qs_bc[x[i]] = m - i
+    return qs_bc
 
-void QS(char *x, int m, char *y, int n) {
-    int j, qsBc[ASIZE];
-    preQsBc(x, m, qsBc);
-    j = 0;
-    while (j <= n - m) {
-        if (memcmp(x, y + j, m) == 0)
-            OUTPUT(j);
-        if (j + m < n)
-            j += qsBc[(unsigned char)y[j + m]];
-        else
-            break;
-    }
-}
+def QS(x, y):
+    m, n = len(x), len(y)
+    qs_bc = pre_qs_bc(x)
+    j = 0
+    while j <= n - m:
+        if x == y[j:j + m]:
+            print(j)
+        if j + m < n:
+            j += qs_bc.get(y[j + m], m + 1)
+        else:
+            break
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -1397,7 +1464,11 @@ Thuật toán sử dụng bad-character shift để tìm ký tự $x[m-1]$ trong
 
 \subsection{Kiểm nghiệm thuật toán}
 
-Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$, $\texttt{shift} = 2$:
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng bad-character shift $\text{bmBc}[a]$: ký tự $x[m-1]=\texttt{G}$ được đặt bằng 0 thay vì giá trị thực, các ký tự khác tính như Horspool với $\texttt{shift} = 2$:
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
@@ -1409,39 +1480,52 @@ $\text{bmBc}[a]$ & 1 & 6 & 0 & 8 \\
 \end{tabular}
 \end{center}
 
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{img206.jpg}
-	\caption{Bảng preBmBc và các bước tìm kiếm}
+	\includegraphics[width=0.9\textwidth]{img261.jpg}
+	\caption{Lần 1: 5 phép so sánh, dịch 2 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{img207.jpg}
-	\caption{OUTPUT(5)}
+	\includegraphics[width=0.9\textwidth]{img262.jpg}
+	\caption{Lần 2: Dịch 2 bước; lần 3: OUTPUT(5), dịch 2 bước}
 \end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{img265.jpg}
+	\caption{Lần 4: Dịch 2 bước -- Kết thúc}
+\end{figure}
+
+Ta thấy thuật toán Tuned-Boyer-Moore thực hiện 10 phép so sánh ký tự và 10 phép dịch chuyển trong ví dụ trên.
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void TUNEDBM(char *x, int m, char *y, int n) {
-    int j, k, shift, bmBc[ASIZE];
-    preBmBc(x, m, bmBc);
-    shift = bmBc[(unsigned char)x[m - 1]];
-    bmBc[(unsigned char)x[m - 1]] = 0;
-    memset(y + n, x[m - 1], m);
-    j = 0;
-    while (j <= n - m) {
-        k = bmBc[(unsigned char)y[j + m - 1]];
-        while (k != 0) {
-            j += k;  k = bmBc[(unsigned char)y[j + m - 1]];
-            j += k;  k = bmBc[(unsigned char)y[j + m - 1]];
-            j += k;  k = bmBc[(unsigned char)y[j + m - 1]];
-        }
-        if (memcmp(x, y + j, m - 1) == 0 && j <= n - m)
-            OUTPUT(j);
-        j += shift;
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_bm_bc(x):
+    m = len(x)
+    bm_bc = {}
+    for i in range(m):
+        bm_bc[x[i]] = m - 1 - i
+    return bm_bc
+
+def TUNEDBM(x, y):
+    m, n = len(x), len(y)
+    bm_bc = pre_bm_bc(x)
+    shift = bm_bc.get(x[m - 1], m)
+    bm_bc[x[m - 1]] = 0
+    sentinel = y + x[m - 1] * m
+    j = 0
+    while j <= n - m:
+        k = bm_bc.get(sentinel[j + m - 1], m)
+        while k != 0:
+            j += k; k = bm_bc.get(sentinel[j + m - 1], m)
+            j += k; k = bm_bc.get(sentinel[j + m - 1], m)
+            j += k; k = bm_bc.get(sentinel[j + m - 1], m)
+        if x[:m - 1] == y[j:j + m - 1] and j <= n - m:
+            print(j)
+        j += shift
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -1450,14 +1534,23 @@ void TUNEDBM(char *x, int m, char *y, int n) {
 
 \subsection{Trình bày thuật toán}
 
-Thuật toán Zhu-Takaoka là biến thể của thuật toán Boyer-Moore. Thuật toán sử dụng 2 ký tự liên tiếp nhau để tính bad-character shift. Trong pha tìm kiếm, các so sánh được thực hiện từ phải sang trái trong cửa sổ $y[j..j+m-1]$, và sự không khớp xảy ra ở $x[m-k]$ và $y[j+m-k]$, và đoạn khớp là $x[m-k+1..m-1] = y[j+m-k+1..j+m-1]$. Thuật toán sẽ tính bad-character shift cho 2 ký tự cuối của cửa sổ là $y[j+m-2]$ và $y[j+m-1]$, đồng thời cũng tính được good-suffix shift. Độ dịch lớn hơn sẽ được chọn để dịch cửa sổ ($\max(\text{bad-character shift}, \text{good-suffix shift})$).
+Thuật toán Zhu-Takaoka là biến thể của thuật toán Boyer-Moore. Thuật toán sử dụng 2 ký tự liên tiếp nhau để tính bad-character shift.
 
-Công thức tính bad-character shift cho 2 ký tự $a, b$:
-\begin{itemize}
-	\item $k < m-2$: $x[m-k..m-k+1] = ab$ và $ab$ không xuất hiện trong $x[m-k+2..m-2]$
-	\item $k = m-1$: $x[0] = b$ và $ab$ không xuất hiện trong $x[0..m-2]$
-	\item $k = m$: $x[0] \neq b$ và $ab$ không xuất hiện trong $x[0..m-2]$
-\end{itemize}
+Trong pha tìm kiếm, các so sánh được thực hiện từ phải sang trái trong cửa sổ $y[j..j+m-1]$, và sự không khớp xảy ra ở $x[m-k]$ và $y[j+m-k]$, và đoạn khớp là $x[m-k+1..m-1] = y[j+m-k+1..j+m-1]$. Thuật toán sẽ tính bad-character shift cho 2 ký tự cuối của cửa sổ là $y[j+m-2]$ và $y[j+m-1]$, đồng thời cũng tính được good-suffix shift. Độ dịch lớn hơn sẽ được chọn để dịch cửa sổ ($\max(\text{bad-character shift}, \text{good-suffix shift})$).
+
+Công thức tính bad-character shift cho 2 ký tự $a, b \in \Sigma$:
+
+\[
+\text{ztBc}[a,b] = k \Leftrightarrow
+\begin{cases}
+k < m-2 & \text{và } x[m-k\mathinner{..}m-k+1] = ab \\
+         & \text{và } ab \text{ không xuất hiện trong } x[m-k+2\mathinner{..}m-2] \text{,} \\[4pt]
+\text{hoặc} & \\[2pt]
+k = m-1 & x[0] = b \text{ và } ab \text{ không xuất hiện trong } x[0\mathinner{..}m-2] \text{,} \\[4pt]
+\text{hoặc} & \\[2pt]
+k = m   & x[0] \neq b \text{ và } ab \text{ không xuất hiện trong } x[0\mathinner{..}m-2] \text{.}
+\end{cases}
+\]
 
 \subsection{Đánh giá độ phức tạp thuật toán}
 
@@ -1468,7 +1561,12 @@ Công thức tính bad-character shift cho 2 ký tự $a, b$:
 
 \subsection{Kiểm nghiệm thuật toán}
 
-Bảng ztBc cho $x = \texttt{GCAGAGAG}$:
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng two-character bad-character shift $\text{ztBc}[a][b]$ -- shift dựa vào cặp ký tự $(y[j+m-1], y[j+m])$ ngay sau và tại cuối cửa sổ:
+
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -1482,10 +1580,26 @@ T & 8 & 8 & 7 & 8 \\
 \end{tabular}
 \end{center}
 
+Bảng good-suffix shift $\text{bmGs}[i]$:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+$i$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+\hline
+$x[i]$ & G & C & A & G & A & G & A & G \\
+\hline
+$\text{bmGs}[i]$ & 7 & 7 & 7 & 2 & 7 & 4 & 7 & 1 \\
+\hline
+\end{tabular}
+\end{center}
+
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img272.jpg}
-	\caption{Lần 1: Dịch 5 (ztBc[C][A]); Lần 2: OUTPUT(5) dịch 7}
+	\caption{Lần 1: Dịch 5 bước (ztBc[C][A]); lần 2: OUTPUT(5), dịch 7 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
@@ -1493,36 +1607,55 @@ T & 8 & 8 & 7 & 8 \\
 	\caption{Lần 3--4: Kết thúc}
 \end{figure}
 
+Ta thấy thuật toán Zhu-Takaoka thực hiện 14 phép so sánh trong ví dụ trên.
+
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void preZtBc(char *x, int m, int ztBc[][ASIZE]) {
-    int i, j;
-    for (i = 0; i < ASIZE; ++i)
-        for (j = 0; j < ASIZE; ++j)
-            ztBc[i][j] = m;
-    for (i = 0; i < ASIZE; ++i)
-        ztBc[i][(unsigned char)x[0]] = m - 1;
-    for (i = 1; i < m - 1; ++i)
-        ztBc[(unsigned char)x[i-1]][(unsigned char)x[i]] = m-1-i;
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_zt_bc(x):
+    m = len(x)
+    zt_bc = {}
+    for i in range(1, m - 1):
+        zt_bc[(x[i - 1], x[i])] = m - 1 - i
+    return zt_bc
 
-void ZT(char *x, int m, char *y, int n) {
-    int i, j, ztBc[ASIZE][ASIZE], bmGs[XSIZE];
-    preZtBc(x, m, ztBc);
-    preBmGs(x, m, bmGs);
-    j = 0;
-    while (j <= n - m) {
-        for (i = m - 1; i >= 0 && x[i] == y[i + j]; --i);
-        if (i < 0) {
-            OUTPUT(j);
-            j += bmGs[0];
-        } else
-            j += MAX(bmGs[i],
-                     ztBc[(unsigned char)y[j+m-2]]
-                         [(unsigned char)y[j+m-1]]);
-    }
-}
+def pre_bm_gs(x):
+    m = len(x)
+    suff = suffixes(x)
+    bm_gs = [m] * m
+    j = 0
+    for i in range(m - 1, -1, -1):
+        if suff[i] == i + 1:
+            while j < m - 1 - i:
+                if bm_gs[j] == m:
+                    bm_gs[j] = m - 1 - i
+                j += 1
+    for i in range(m - 1):
+        bm_gs[m - 1 - suff[i]] = m - 1 - i
+    return bm_gs
+
+def zt_shift(zt_bc, a, b, x, m):
+    if (a, b) in zt_bc:
+        return zt_bc[(a, b)]
+    if b == x[0]:
+        return m - 1
+    return m
+
+def ZT(x, y):
+    m, n = len(x), len(y)
+    zt_bc = pre_zt_bc(x)
+    bm_gs = pre_bm_gs(x)
+    j = 0
+    while j <= n - m:
+        i = m - 1
+        while i >= 0 and x[i] == y[i + j]:
+            i -= 1
+        if i < 0:
+            print(j)
+            j += bm_gs[0]
+        else:
+            j += max(bm_gs[i],
+                     zt_shift(zt_bc, y[j + m - 2], y[j + m - 1], x, m))
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -1538,8 +1671,10 @@ Pha tiền xử lý thực hiện tính độ dịch bad-character shift cho c�
 Cách tính bad-character shift cho $(a, b)$:
 \[
 \text{brBc}[a, b] = \min \begin{cases}
-m - 1 - i : x[i] = a,\ x[i+1] = b,\ 0 \leq i < m-1 \\
-m : x[0] = b,\ m + 1 : \text{ngược lại}
+1           & \text{nếu } x[m-1] = a, \\
+m - i       & \text{nếu } x[i]x[i+1] = ab \ (0 \leq i < m), \\
+m + 1       & \text{nếu } x[0] = b, \\
+m + 2       & \text{trong các trường hợp khác.}
 \end{cases}
 \]
 
@@ -1554,7 +1689,11 @@ Nếu cửa sổ hiện tại đang ở vị trí $y[j..j+m-1]$ thì bước d�
 
 \subsection{Kiểm nghiệm thuật toán}
 
-Bảng brBc cho $x = \texttt{GCAGAGAG}$:
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng $\text{brBc}[a][b]$ -- shift dựa vào cặp ký tự $(y[j+m], y[j+m+1])$ liền sau cửa sổ:
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -1570,10 +1709,12 @@ T  & 10 & 10 & 9  & 10 & 10 \\
 \end{tabular}
 \end{center}
 
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img282.jpg}
-	\caption{Lần 1--4: Lần 4 OUTPUT(5), dịch 10}
+	\caption{Lần 1--4: OUTPUT(5) ở lần 4, dịch 10 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
@@ -1581,34 +1722,36 @@ T  & 10 & 10 & 9  & 10 & 10 \\
 	\caption{Lần 5--6: Kết thúc}
 \end{figure}
 
+Ta thấy thuật toán Berry-Ravindran thực hiện 16 phép so sánh ký tự trong ví dụ trên.
+
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void preBrBc(char *x, int m, int brBc[][ASIZE]) {
-    int a, i;
-    for (a = 0; a < ASIZE; ++a)
-        for (i = 0; i < ASIZE; ++i)
-            brBc[a][i] = m + 2;
-    for (a = 0; a < ASIZE; ++a)
-        brBc[a][(unsigned char)x[0]] = m + 1;
-    for (i = 0; i < m - 1; ++i)
-        brBc[(unsigned char)x[i]][(unsigned char)x[i+1]] = m-i;
-    for (a = 0; a < ASIZE; ++a)
-        brBc[(unsigned char)x[m-1]][a] = 1;
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_br_bc(x):
+    m = len(x)
+    br_bc = {}
+    for i in range(m - 1):
+        br_bc[(x[i], x[i + 1])] = m - i
+    return br_bc
 
-void BR(char *x, int m, char *y, int n) {
-    int brBc[ASIZE][ASIZE], j;
-    preBrBc(x, m, brBc);
-    y[n] = y[n + 1] = '\0';
-    j = 0;
-    while (j <= n - m) {
-        if (memcmp(x, y + j, m) == 0)
-            OUTPUT(j);
-        j += brBc[(unsigned char)y[j+m]]
-                 [(unsigned char)y[j+m+1]];
-    }
-}
+def br_shift(br_bc, a, b, x, m):
+    if a == x[m - 1]:
+        return 1
+    if (a, b) in br_bc:
+        return br_bc[(a, b)]
+    if b == x[0]:
+        return m + 1
+    return m + 2
+
+def BR(x, y):
+    m, n = len(x), len(y)
+    br_bc = pre_br_bc(x)
+    y_ext = y + '\0\0'
+    j = 0
+    while j <= n - m:
+        if x == y[j:j + m]:
+            print(j)
+        j += br_shift(br_bc, y_ext[j + m], y_ext[j + m + 1], x, m)
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -1617,43 +1760,65 @@ void BR(char *x, int m, char *y, int n) {
 
 \subsection{Trình bày thuật toán}
 
-Thuật toán Apostolico-Giancarlo là biến thể của thuật toán Boyer-Moore. Thuật toán Boyer-Moore khó phân tích và sau mỗi lần thử nó quên hết tất cả các ký tự đã khớp trước đó. Apostolico-Giancarlo ghi nhớ độ dài của suffix dài nhất của mẫu $x$ sau mỗi lần thử. Thông tin này được lưu trong bảng \texttt{skip}. Giả sử trong 1 lần thử ở vị trí nhỏ hơn $j$, thuật toán đã match một suffix độ dài $k$ của $x$ ở vị trí $i + j$ $(0 < i < m)$ thì $\text{skip}[i+j] = k$. Nghĩa là $y[i+j-k+1..i+j] = x[m-1-k+1..m-1]$. Đặt $\text{suff}[i]$ $(0 \leq i < m)$ bằng độ dài suffix dài nhất của $x$ kết thúc ở vị trí $i$ trong $x$.
+Thuật toán Apostolico-Giancarlo là biến thể của thuật toán Boyer-Moore. Thuật toán Boyer-Moore khó phân tích và sau mỗi lần thử nó quên hết tất cả các ký tự đã khớp trước đó. Apostolico-Giancarlo ghi nhớ độ dài của suffix dài nhất của mẫu $x$ sau mỗi lần thử. Thông tin này được lưu trong bảng \texttt{skip}.
+
+Giả sử trong 1 lần thử ở vị trí nhỏ hơn $j$, thuật toán đã match một suffix độ dài $k$ của $x$ ở vị trí $i + j$ $(0 < i < m)$ thì $\text{skip}[i+j] = k$. Nghĩa là $y[i+j-k+1..i+j] = x[m-1-k+1..m-1]$.
+
+Đặt $\text{suff}[i]$ $(0 \leq i < m)$ bằng độ dài suffix dài nhất của $x$ kết thúc ở vị trí $i$ trong $x$.
 
 Trong lần thử tại vị trí $j$, nếu đoạn text $y[i+j+1..j+m-1]$ đã khớp với mẫu $x$ thì 4 trường hợp sau có thể xảy ra (với $k = \text{skip}[i+j]$ và $s = \text{suff}[i]$):
 
 \begin{itemize}
-	\item \textbf{TH 1}: $k > s$ và $s = i+1$. Điều đó có nghĩa rằng ta đã tìm thấy một mẫu $x$ trong $y$. Khi đó $\text{skip}[j+m-1] = m$.
-	\item \textbf{TH 2}: $k > s$ và $s \leq i$. Điều đó có nghĩa là sự không khớp xảy ra giữa ký tự $x[i - \text{suff}[i]]$ và $y[i+j-\text{suff}[i]]$. Khi đó $\text{skip}[j+m-1] = m-1-i+\text{suff}[i]$. Bước dịch được thực hiện sử dụng $\text{bmBc}[y[i+j-\text{suff}[i]]]$ và $\text{bmGs}[i-\text{suff}[i]+1]$.
-	\item \textbf{TH 3}: $k < s$, nghĩa là sự không khớp xảy ra giữa ký tự $x[i-k]$ và $y[i+j-k]$. Khi đó $\text{skip}[j+m-1] = m-1-i+k$. Bước dịch được thực hiện sử dụng $\text{bmBc}[y[i+j-k]]$ và $\text{bmGs}[i-k+1]$.
-	\item \textbf{TH 4}: $k = s$. Đây là trường hợp duy nhất bước nhảy phải nhảy qua đoạn $y[i+j-k+1..i+j]$ để so sánh 2 ký tự $y[i+j-k]$ và $x[i-k]$.
+	\item \textbf{TH 1}: $k > \text{suff}[i]$ và $\text{suff}[i] = i+1$. Điều đó có nghĩa rằng ta đã tìm thấy một mẫu $x$ trong $y$. Khi đó $\text{skip}[j+m-1] = m$.
 \end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{img289.jpg}
+	\caption{Trường hợp 1: $k > \text{suff}[i]$ và $\text{suff}[i] = i+1$, tìm thấy một lần xuất hiện của $x$}
+\end{figure}
+
+\begin{itemize}
+	\item \textbf{TH 2}: $k > \text{suff}[i]$ và $\text{suff}[i] \leq i$. Điều đó có nghĩa là sự không khớp xảy ra giữa ký tự $x[i - \text{suff}[i]]$ và $y[i+j-\text{suff}[i]]$. Khi đó $\text{skip}[j+m-1] = m-1-i+\text{suff}[i]$. Bước dịch được thực hiện sử dụng $\text{bmBc}[y[i+j-\text{suff}[i]]]$ và $\text{bmGs}[i-\text{suff}[i]+1]$.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{img290.jpg}
+	\caption{Trường hợp 2: $k > \text{suff}[i]$ và $\text{suff}[i] \leq i$, mismatch xảy ra giữa $y[i+j-\text{suff}[i]]$ và $x[i-\text{suff}[i]]$}
+\end{figure}
+
+\begin{itemize}
+	\item \textbf{TH 3}: $k < \text{suff}[i]$, nghĩa là sự không khớp xảy ra giữa ký tự $x[i-k]$ và $y[i+j-k]$. Khi đó $\text{skip}[j+m-1] = m-1-i+k$. Bước dịch được thực hiện sử dụng $\text{bmBc}[y[i+j-k]]$ và $\text{bmGs}[i-k+1]$.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{img293.jpg}
+	\caption{Trường hợp 3: $k < \text{suff}[i]$, mismatch xảy ra giữa $y[i+j-k]$ và $x[i-k]$}
+\end{figure}
+
+\begin{itemize}
+	\item \textbf{TH 4}: $k = \text{suff}[i]$. Đây là trường hợp duy nhất bước nhảy phải nhảy qua đoạn $y[i+j-k+1..i+j]$ để so sánh 2 ký tự $y[i+j-k]$ và $x[i-k]$.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{img294.jpg}
+	\caption{Trường hợp 4: $k = \text{suff}[i]$ và $a \neq b$}
+\end{figure}
 
 Thuật toán Apostolico-Giancarlo sử dụng 2 cấu trúc dữ liệu:
 \begin{itemize}
-	\item Một bảng \texttt{skip} được cập nhật ở cuối mỗi lần thử $j$.
-	\item Một bảng \texttt{suff} sử dụng để tính bảng \texttt{bmGs}.
+	\item Một bảng \texttt{skip} được cập nhật ở cuối mỗi lần thử $j$ theo công thức:
+	\[
+		\text{skip}[j+m-1] = \max\bigl\{\, k : x[m-k\mathinner{..}m-1] = y[j+m-k\mathinner{..}j+m-1] \,\bigr\}
+	\]
+	\item Một bảng \texttt{suff} sử dụng để tính bảng \texttt{bmGs}, được định nghĩa với $1 \leq i < m$:
+	\[
+		\text{suff}[i] = \max\bigl\{\, k : x[i-k+1\mathinner{..}i] = x[m-k\mathinner{..}m-1] \,\bigr\}
+	\]
 \end{itemize}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\textwidth]{img289.jpg}
-	\caption{Trường hợp 1: $k > s$ và $s = i+1$}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\textwidth]{img290.jpg}
-	\caption{Trường hợp 2: $k > s$ và $s \leq i$}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\textwidth]{img293.jpg}
-	\caption{Trường hợp 3: $k < s$}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\textwidth]{img294.jpg}
-	\caption{Trường hợp 4: $k = s$}
-\end{figure}
 
 \subsection{Đánh giá độ phức tạp thuật toán}
 
@@ -1663,6 +1828,40 @@ Thuật toán Apostolico-Giancarlo sử dụng 2 cấu trúc dữ liệu:
 \end{itemize}
 
 \subsection{Kiểm nghiệm thuật toán}
+
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng bad-character shift $\text{bmBc}[a]$:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$a$ & A & C & G & T \\
+\hline
+$\text{bmBc}[a]$ & 1 & 6 & 2 & 8 \\
+\hline
+\end{tabular}
+\end{center}
+
+Bảng good-suffix shift $\text{bmGs}[i]$:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+$i$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+\hline
+$x[i]$ & G & C & A & G & A & G & A & G \\
+\hline
+$\text{suff}[i]$ & 1 & 0 & 0 & 2 & 0 & 4 & 0 & 8 \\
+\hline
+$\text{bmGs}[i]$ & 7 & 7 & 7 & 2 & 7 & 4 & 7 & 1 \\
+\hline
+\end{tabular}
+\end{center}
+
+Pha tìm kiếm:
 
 \begin{figure}[H]
 	\centering
@@ -1675,43 +1874,86 @@ Thuật toán Apostolico-Giancarlo sử dụng 2 cấu trúc dữ liệu:
 	\caption{Lần 4--5: Kết thúc}
 \end{figure}
 
+Ta thấy thuật toán Apostolico-Giancarlo thực hiện 15 phép so sánh trong ví dụ trên.
+
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void AG(char *x, int m, char *y, int n) {
-    int bcShift, i, j, k, shift, s;
-    int bmGs[XSIZE], bmBc[ASIZE], suff[XSIZE], skip[YSIZE];
-    preBmGs(x, m, bmGs);
-    preBmBc(x, m, bmBc);
-    suffixes(x, m, suff);
-    memset(skip, 0, n * sizeof(int));
-    j = 0;
-    while (j <= n - m) {
-        i = m - 1;
-        while (i >= 0) {
-            k = skip[i + j];
-            s = suff[i];
-            if (k > 0) {
-                if (k > s) { i -= s; break; }
-                else if (k < s) { i -= k; break; }
-                else i -= s;
-            } else {
-                if (x[i] == y[i + j]) --i;
-                else break;
-            }
-        }
-        if (i < 0) {
-            OUTPUT(j);
-            skip[j + m - 1] = m;
-            shift = bmGs[0];
-        } else {
-            skip[i + j] = m - 1 - i;
-            bcShift = bmBc[(unsigned char)y[i+j]] - m + 1 + i;
-            shift = MAX(bmGs[i], bcShift);
-        }
-        j += shift;
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def suffixes(x):
+    m = len(x)
+    suff = [0] * m
+    suff[m - 1] = m
+    g = m - 1
+    f = 0
+    for i in range(m - 2, -1, -1):
+        if i > g and suff[i + m - 1 - f] < i - g:
+            suff[i] = suff[i + m - 1 - f]
+        else:
+            if i < g:
+                g = i
+            f = i
+            while g >= 0 and x[g] == x[g + m - 1 - f]:
+                g -= 1
+            suff[i] = f - g
+    return suff
+
+def pre_bm_gs(x):
+    m = len(x)
+    suff = suffixes(x)
+    bm_gs = [m] * m
+    j = 0
+    for i in range(m - 1, -1, -1):
+        if suff[i] == i + 1:
+            while j < m - 1 - i:
+                if bm_gs[j] == m:
+                    bm_gs[j] = m - 1 - i
+                j += 1
+    for i in range(m - 1):
+        bm_gs[m - 1 - suff[i]] = m - 1 - i
+    return bm_gs
+
+def pre_bm_bc(x):
+    m = len(x)
+    bm_bc = {}
+    for i in range(m):
+        bm_bc[x[i]] = m - 1 - i
+    return bm_bc
+
+def AG(x, y):
+    m, n = len(x), len(y)
+    bm_gs = pre_bm_gs(x)
+    bm_bc = pre_bm_bc(x)
+    suff = suffixes(x)
+    skip = [0] * n
+    j = 0
+    while j <= n - m:
+        i = m - 1
+        while i >= 0:
+            k = skip[i + j]
+            s = suff[i]
+            if k > 0:
+                if k > s:
+                    i -= s
+                    break
+                elif k < s:
+                    i -= k
+                    break
+                else:
+                    i -= s
+            else:
+                if x[i] == y[i + j]:
+                    i -= 1
+                else:
+                    break
+        if i < 0:
+            print(j)
+            skip[j + m - 1] = m
+            shift = bm_gs[0]
+        else:
+            skip[i + j] = m - 1 - i
+            bc_shift = bm_bc.get(y[i + j], m) - m + 1 + i
+            shift = max(bm_gs[i], bc_shift)
+        j += shift
 \end{lstlisting}
 
 %=============================================================
@@ -1722,11 +1964,30 @@ void AG(char *x, int m, char *y, int n) {
 
 \subsection{Trình bày thuật toán}
 
-Thuật toán Colussi là sự cải tiến của thuật toán Knuth-Morris-Pratt. Các vị trí của mẫu (pattern) được chia làm 2 tập con. Các vị trí trong tập con thứ nhất được duyệt từ trái sang phải và các vị trí trong tập con thứ 2 (các vị trí còn lại) được duyệt từ phải sang trái. Mỗi lần thử (mỗi cửa sổ của văn bản $y$) gồm 2 pha (pha 1 luôn có, pha hai có thể có hoặc không):
+Thuật toán Colussi là sự cải tiến của thuật toán Knuth-Morris-Pratt.
+
+Các vị trí của mẫu (pattern) được chia làm 2 tập con. Các vị trí trong tập con thứ nhất được duyệt từ trái sang phải và các vị trí trong tập con thứ 2 (các vị trí còn lại) được duyệt từ phải sang trái.
+
+Mỗi lần thử (mỗi cửa sổ của văn bản $y$) gồm 2 pha (pha 1 luôn có, pha hai có thể có hoặc không):
 \begin{itemize}
 	\item \textbf{Pha 1} thực hiện so sánh từ trái sang phải các ký tự trong text với các ký tự trong pattern mà \texttt{kmpNext} có giá trị $> -1$. Những vị trí này trong pattern được gọi là \textbf{noholes}.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{img309.jpg}
+	\caption{Pha 1: khi dịch cửa sổ, 2 vị trí noholes (hình tròn đen) của pattern đã match với text nên không cần so sánh lại}
+\end{figure}
+
+\begin{itemize}
 	\item \textbf{Pha 2} sẽ được thực hiện khi tất cả các so sánh trong pha 1 đều match. Nếu có 1 sự không khớp xảy ra trong pha 1 thuật toán sẽ dịch chuyển cửa sổ mà không thực hiện pha 2. Pha 2 so sánh các vị trí còn lại của pattern (các vị trí này gọi là \textbf{holes}) từ phải sang trái. Nếu có 1 sự không khớp xảy ra, thuật toán sẽ dịch chuyển cửa sổ sang vị trí tiếp theo.
 \end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{img310.jpg}
+	\caption{Pha 2: tất cả noholes đã match, so sánh các holes (hình tròn trắng) từ phải sang; khi dịch cửa sổ không cần so sánh lại phần prefix đã match}
+\end{figure}
 
 Chiến lược này có 2 ưu điểm:
 \begin{itemize}
@@ -1743,11 +2004,40 @@ Chiến lược này có 2 ưu điểm:
 
 \subsection{Kiểm nghiệm thuật toán}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.9\textwidth]{img313.jpg}
-	\caption{Bảng tiền xử lý Colussi cho $x = \texttt{GCAGAGAG}$}
-\end{figure}
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng các mảng tiền xử lý của Colussi với $nd = 3$ holes (vị trí $i$ có $\text{kmpNext}[i]=-1$) và $m-nd=5$ noholes:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+$i$           & 0  & 1 & 2 & 3  & 4 & 5  & 6 & 7  & 8 \\
+\hline
+$x[i]$        & G  & C & A & G  & A & G  & A & G  &   \\
+\hline
+$\text{kmpNext}[i]$ & $-1$ & 0 & 0 & $-1$ & 1 & $-1$ & 1 & $-1$ & 1 \\
+\hline
+$\text{kmin}[i]$    & 0  & 1 & 2 & 0  & 3 & 0  & 5 & 0  &   \\
+\hline
+$h[i]$        & 1  & 2 & 4 & 6  & 7 & 5  & 3 & 0  &   \\
+\hline
+$\text{next}[i]$    & 0  & 0 & 0 & 0  & 0 & 0  & 0 & 0  & 0 \\
+\hline
+$\text{shift}[i]$   & 1  & 2 & 3 & 5  & 8 & 7  & 7 & 7  & 7 \\
+\hline
+$\text{hmax}[i]$    & 0  & 1 & 2 & 4  & 4 & 6  & 6 & 8  & 8 \\
+\hline
+$\text{rmin}[i]$    & 7  & 0 & 0 & 7  & 0 & 7  & 0 & 8  &   \\
+\hline
+$\text{ndh0}[i]$    & 0  & 0 & 1 & 2  & 2 & 3  & 3 & 4  &   \\
+\hline
+\end{tabular}
+\end{center}
+
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img314.jpg}
@@ -1756,7 +2046,7 @@ Chiến lược này có 2 ưu điểm:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img317.jpg}
-	\caption{Lần 4--7}
+	\caption{Lần 4--7: Dịch tiếp}
 \end{figure}
 \begin{figure}[H]
 	\centering
@@ -1764,53 +2054,70 @@ Chiến lược này có 2 ưu điểm:
 	\caption{Lần 8: Kết thúc}
 \end{figure}
 
+Ta thấy thuật toán Colussi thực hiện 20 lần so sánh ký tự trong ví dụ trên.
+
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-int preColussi(char *x, int m, int h[], int next[], int shift[]) {
-    int i, k, q, r, s, nd, kmin[XSIZE], rmin[XSIZE],
-        hmax[XSIZE], nhd0[XSIZE], kmpNext[XSIZE];
-    preKmp(x, m, kmpNext);
-    for (i = 0; i <= m; ++i) hmax[i] = 0;
-    for (k = 1; k < m; k += (k == kmpNext[k]+1) ? 1 : m) {
-        q = 0;
-        while (q + k <= m) { hmax[q] = q + k; q += k; }
-    }
-    for (i = 0; i < m; ++i) kmin[i] = rmin[i] = m;
-    s = r = 0;
-    for (i = 0; i < m; ++i) {
-        if (hmax[i] == i + kmpNext[i + 1] + 1)
-            h[s++] = i;
-        else
-            h[m - 1 - r++] = i;
-    }
-    nd = s;
-    for (i = 0; i <= m; ++i) shift[i] = rmin[0];
-    for (i = nd - 1; i >= 0; --i)
-        shift[i] = kmin[h[i]];
-    nhd0[0] = 0;
-    for (i = 0; i < nd; ++i)
-        nhd0[i+1] = nhd0[i] + (h[i] == 0 ? 0 : 1);
-    for (i = 0; i <= nd; ++i) next[i] = nhd0[shift[i]];
-    return nd;
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_kmp(x):
+    m = len(x)
+    kmp_next = [-1] + [0] * m
+    i, j = 0, -1
+    while i < m:
+        while j > -1 and x[i] != x[j]:
+            j = kmp_next[j]
+        i += 1
+        j += 1
+        if i < m and x[i] == x[j]:
+            kmp_next[i] = kmp_next[j]
+        else:
+            kmp_next[i] = j
+    return kmp_next
 
-void COLUSSI(char *x, int m, char *y, int n) {
-    int i, j, last, nd, h[XSIZE], next[XSIZE], shift[XSIZE];
-    nd = preColussi(x, m, h, next, shift);
-    j = last = i = 0;
-    while (j <= n - m) {
-        while (i < m &&
-               (last < j + h[i] || x[h[i]] == y[j + h[i]]))
-            ++i;
-        if (i >= m) {
-            OUTPUT(j);
-            last = j + m - 1;
-        }
-        j += shift[i];
-        i = next[i];
-    }
-}
+def pre_colussi(x):
+    m = len(x)
+    kmp_next = pre_kmp(x)
+    hmax = [0] * (m + 1)
+    k = 1
+    while k < m:
+        q = 0
+        while q + k <= m:
+            hmax[q] = q + k
+            q += k
+        k += 1 if k == kmp_next[k] + 1 else m
+    kmin = [m] * m
+    rmin = [m] * m
+    h = [0] * m
+    s = r = 0
+    for i in range(m):
+        if hmax[i] == i + kmp_next[i + 1] + 1:
+            h[s] = i
+            s += 1
+        else:
+            h[m - 1 - r] = i
+            r += 1
+    nd = s
+    shift = [rmin[0]] * (m + 1)
+    for i in range(nd - 1, -1, -1):
+        shift[i] = kmin[h[i]]
+    nhd0 = [0] * (nd + 1)
+    for i in range(nd):
+        nhd0[i + 1] = nhd0[i] + (0 if h[i] == 0 else 1)
+    next_arr = [nhd0[shift[i]] for i in range(nd + 1)]
+    return nd, h, next_arr, shift
+
+def COLUSSI(x, y):
+    m, n = len(x), len(y)
+    nd, h, next_arr, shift = pre_colussi(x)
+    j = last = i = 0
+    while j <= n - m:
+        while i < m and (last < j + h[i] or x[h[i]] == y[j + h[i]]):
+            i += 1
+        if i >= m:
+            print(j)
+            last = j + m - 1
+        j += shift[i]
+        i = next_arr[i]
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -1821,7 +2128,9 @@ void COLUSSI(char *x, int m, char *y, int n) {
 
 Đối với mỗi ký tự trong bảng chữ cái, thuật toán Skip Search sử dụng một thùng (bucket) để chứa tất cả các vị trí của ký tự đó trong mẫu $x$. Khi một ký tự xuất hiện $k$ lần trong mẫu $x$, sẽ có $k$ vị trí tương ứng trong bucket của ký tự đó. Khi xâu $y$ chứa ít ký tự hơn so với bảng chữ cái, sẽ có một số bucket rỗng.
 
-Pha tiền xử lý của thuật toán Skip Search sẽ tính bucket cho tất cả các ký tự trong bảng chữ cái. Đối với mỗi ký tự $c$ thuộc bảng chữ cái, ta có:
+Pha tiền xử lý của thuật toán Skip Search sẽ tính bucket cho tất cả các ký tự trong bảng chữ cái.
+
+Đối với mỗi ký tự $c$ thuộc bảng chữ cái, ta có:
 \[z[c] = \{i : 0 \leq i \leq m-1 \text{ và } x[i] = c\}\]
 $z[c]$ chính là bucket của ký tự $c$.
 
@@ -1836,7 +2145,11 @@ Vòng lặp chính của pha tìm kiếm sẽ kiểm tra mỗi ký tự thứ $m
 
 \subsection{Kiểm nghiệm thuật toán}
 
-Bảng $z[c]$ cho $x = \texttt{GCAGAGAG}$:
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng bucket $z[c]$ -- tập các vị trí xuất hiện của ký tự $c$ trong $x$:
 
 \begin{center}
 \begin{tabular}{|c|l|}
@@ -1851,42 +2164,37 @@ T & $\emptyset$ \\
 \end{tabular}
 \end{center}
 
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img331.jpg}
-	\caption{Pha tìm kiếm: OUTPUT(5)}
+	\caption{Lần 1: OUTPUT(5)}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img334.jpg}
-	\caption{Tiếp tục tìm kiếm}
+	\caption{Lần 2: Kết thúc}
 \end{figure}
+
+Ta thấy thuật toán Skip Search thực hiện 14 phép so sánh trong ví dụ trên.
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void SKIP(char *x, int m, char *y, int n) {
-    struct cell { int element; struct cell *next; };
-    struct cell *z[ASIZE], *p;
-    int i, j;
-    for (i = 0; i < ASIZE; ++i) z[i] = NULL;
-    for (i = m - 1; i >= 0; --i) {
-        p = (struct cell *)malloc(sizeof(struct cell));
-        p->element = i;
-        p->next = z[(unsigned char)x[i]];
-        z[(unsigned char)x[i]] = p;
-    }
-    for (j = m - 1; j < n; j += m) {
-        p = z[(unsigned char)y[j]];
-        while (p != NULL) {
-            i = p->element;
-            if (j - i + m - 1 > n - 1) break;
-            if (j - i >= 0 && memcmp(x, y + j - i, m) == 0)
-                OUTPUT(j - i);
-            p = p->next;
-        }
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def SKIP(x, y):
+    m, n = len(x), len(y)
+    z = {}
+    for i in range(m):
+        z.setdefault(x[i], []).append(i)
+    j = m - 1
+    while j < n:
+        for i in z.get(y[j], []):
+            if j - i + m - 1 > n - 1:
+                break
+            if j - i >= 0 and y[j - i:j - i + m] == x:
+                print(j - i)
+        j += m
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -1910,7 +2218,11 @@ Pha tìm kiếm xem xét bucket của factor $y[j..j+L-1]$ với tất cả $j =
 
 \subsection{Kiểm nghiệm thuật toán}
 
-Bảng $z[u]$ cho $x = \texttt{GCAGAGAG}$ với $q = 3$:
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng bucket $z[u]$ -- tập vị trí xuất hiện của 3-gram $u$ trong $x$:
 
 \begin{center}
 \begin{tabular}{|c|c|}
@@ -1930,10 +2242,13 @@ GCA & $\{0\}$ \\
 	\includegraphics[width=0.9\textwidth]{img339.jpg}
 	\caption{Trie của Alpha Skip với $q = 3$}
 \end{figure}
+
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img341.jpg}
-	\caption{Lần 1: OUTPUT(5); Lần 2}
+	\caption{Lần 1: OUTPUT(5); lần 2: Dịch tiếp}
 \end{figure}
 \begin{figure}[H]
 	\centering
@@ -1941,23 +2256,30 @@ GCA & $\{0\}$ \\
 	\caption{Lần 3: Kết thúc}
 \end{figure}
 
+Ta thấy thuật toán Alpha Skip Search thực hiện 18 phép so sánh trong ví dụ trên.
+
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void ALPHASKIP(char *x, int m, char *y, int n) {
-    int logM, shift, b, j, q;
-    for (logM = 1, q = ASIZE; q < m; q *= ASIZE, ++logM);
-    /* Build trie and z lists */
-    shift = m - logM + 1;
-    for (j = m - logM; j < n - logM + 1; j += shift) {
-        /* Traverse trie on y[j..j+logM-1]          */
-        /* For each match in z[node]:                */
-        /*   b = j - position_in_x                  */
-        /*   if b >= 0 && b <= n-m                  */
-        /*     if memcmp(x, y+b, m) == 0            */
-        /*       OUTPUT(b)                           */
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+import math
+
+def ALPHASKIP(x, y):
+    m, n = len(x), len(y)
+    sigma = 256
+    L = max(1, math.ceil(math.log(m, sigma)))
+    shift = m - L + 1
+    trie = {}
+    for i in range(m - L + 1):
+        factor = x[i:i + L]
+        trie.setdefault(factor, []).append(i)
+    j = L - 1
+    while j < n - L + 1:
+        factor = y[j:j + L]
+        for pos in trie.get(factor, []):
+            b = j - pos
+            if 0 <= b <= n - m and y[b:b + m] == x:
+                print(b)
+        j += shift
 \end{lstlisting}
 
 %=============================================================
@@ -1968,7 +2290,9 @@ void ALPHASKIP(char *x, int m, char *y, int n) {
 
 \subsection{Trình bày thuật toán}
 
-Thuật toán Horspool là phiên bản đơn giản hóa của thuật toán Boyer-Moore. Quy tắc dịch bad-character sử dụng trong thuật toán Boyer-Moore không hiệu quả đối với bảng chữ cái nhỏ, nhưng khi bảng chữ cái lớn so với độ dài của mẫu, như trường hợp với bảng ASCII và tìm kiếm thông thường trong một text editor thì nó trở nên rất hữu ích. Horspool đề xuất chỉ sử dụng bad-character shift của ký tự ngoài cùng bên phải cửa sổ (ký tự $y[j+m-1]$) để tính độ dịch.
+Thuật toán Horspool là phiên bản đơn giản hóa của thuật toán Boyer-Moore. Quy tắc dịch bad-character sử dụng trong thuật toán Boyer-Moore không hiệu quả đối với bảng chữ cái nhỏ, nhưng khi bảng chữ cái lớn so với độ dài của mẫu, như trường hợp với bảng ASCII và tìm kiếm thông thường trong một text editor thì nó trở nên rất hữu ích.
+
+Horspool đề xuất chỉ sử dụng bad-character shift của ký tự ngoài cùng bên phải cửa sổ (ký tự $y[j+m-1]$) để tính độ dịch.
 
 \subsection{Đánh giá độ phức tạp thuật toán}
 
@@ -1979,15 +2303,33 @@ Thuật toán Horspool là phiên bản đơn giản hóa của thuật toán Bo
 
 \subsection{Kiểm nghiệm thuật toán}
 
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng Horspool bad-character shift $\text{bmBc}[a]$ -- dịch theo ký tự ngoài cùng phải của cửa sổ $y[j+m-1]$; tính theo vị trí xuất hiện phải nhất của $a$ trong $x[0..m-2]$:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$a$ & A & C & G & T \\
+\hline
+$\text{bmBc}[a]$ & 1 & 6 & 2 & 8 \\
+\hline
+\end{tabular}
+\end{center}
+
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img357.jpg}
-	\caption{Lần 1--2}
+	\caption{Lần 1--2: Dịch tiếp}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img358.jpg}
-	\caption{Lần 3--5: Lần 4 OUTPUT(5)}
+	\caption{Lần 3--5: OUTPUT(5) ở lần 4}
 \end{figure}
 \begin{figure}[H]
 	\centering
@@ -1995,22 +2337,27 @@ Thuật toán Horspool là phiên bản đơn giản hóa của thuật toán Bo
 	\caption{Lần 6--7: Kết thúc}
 \end{figure}
 
+Thuật toán Horspool thực hiện 17 phép so sánh trong ví dụ trên.
+
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void HORSPOOL(char *x, int m, char *y, int n) {
-    int j, bmBc[ASIZE];
-    char c;
-    preBmBc(x, m, bmBc);
-    j = 0;
-    while (j <= n - m) {
-        c = y[j + m - 1];
-        if (x[m - 1] == c &&
-            memcmp(x, y + j, m - 1) == 0)
-            OUTPUT(j);
-        j += bmBc[(unsigned char)c];
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_bm_bc(x):
+    m = len(x)
+    bm_bc = {}
+    for i in range(m):
+        bm_bc[x[i]] = m - 1 - i
+    return bm_bc
+
+def HORSPOOL(x, y):
+    m, n = len(x), len(y)
+    bm_bc = pre_bm_bc(x)
+    j = 0
+    while j <= n - m:
+        c = y[j + m - 1]
+        if x[m - 1] == c and x[:m - 1] == y[j:j + m - 1]:
+            print(j)
+        j += bm_bc.get(c, m)
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -2019,7 +2366,11 @@ void HORSPOOL(char *x, int m, char *y, int n) {
 
 \subsection{Trình bày thuật toán}
 
-Thuật toán Smith sẽ giữ lại giá trị lớn nhất trong hai giá trị Horspool bad-character shift và Quick Search bad-character shift. Smith nhận thấy rằng độ dịch của ký tự ngay sau ký tự ngoài cùng bên phải ($y[j+m]$) đôi khi ngắn hơn độ dịch của ký tự ngoài cùng bên phải của cửa sổ ($y[j+m-1]$). Do đó, ông khuyên giữ lại giá trị lớn nhất trong 2 giá trị này. Pha tiền xử lý của thuật toán Smith sẽ tính các giá trị Horspool bad-character shift và Quick Search bad-character shift.
+Thuật toán Smith sẽ giữ lại giá trị lớn nhất trong hai giá trị Horspool bad-character shift và Quick Search bad-character shift.
+
+Smith nhận thấy rằng độ dịch của ký tự ngay sau ký tự ngoài cùng bên phải ($y[j+m]$) đôi khi ngắn hơn độ dịch của ký tự ngoài cùng bên phải của cửa sổ ($y[j+m-1]$). Do đó, ông khuyên giữ lại giá trị lớn nhất trong 2 giá trị này.
+
+Pha tiền xử lý của thuật toán Smith sẽ tính các giá trị Horspool bad-character shift và Quick Search bad-character shift.
 
 \subsection{Đánh giá độ phức tạp thuật toán}
 
@@ -2030,32 +2381,67 @@ Thuật toán Smith sẽ giữ lại giá trị lớn nhất trong hai giá tr�
 
 \subsection{Kiểm nghiệm thuật toán}
 
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng Horspool bad-character shift $\text{bmBc}[a]$ và Quick Search bad-character shift $\text{qsBc}[a]$; Smith dịch theo $\max(\text{bmBc}[y[j+m-1]],\, \text{qsBc}[y[j+m]])$:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$a$ & A & C & G & T \\
+\hline
+$\text{bmBc}[a]$ & 1 & 6 & 2 & 8 \\
+\hline
+$\text{qsBc}[a]$ & 2 & 7 & 1 & 9 \\
+\hline
+\end{tabular}
+\end{center}
+
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img366.jpg}
-	\caption{Lần 1--2}
+	\caption{Lần 1--2: Dịch tiếp}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img367.jpg}
-	\caption{Lần 3--5: Lần 4 OUTPUT(5)}
+	\caption{Lần 3--5: OUTPUT(5) ở lần 4, Kết thúc}
 \end{figure}
+
+Thuật toán Smith thực hiện 15 phép so sánh trong ví dụ trên
 
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void SMITH(char *x, int m, char *y, int n) {
-    int j, bmBc[ASIZE], qsBc[ASIZE];
-    preBmBc(x, m, bmBc);
-    preQsBc(x, m, qsBc);
-    j = 0;
-    while (j <= n - m) {
-        if (memcmp(x, y + j, m) == 0)
-            OUTPUT(j);
-        j += MAX(bmBc[(unsigned char)y[j + m - 1]],
-                 qsBc[(unsigned char)y[j + m]]);
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_bm_bc(x):
+    m = len(x)
+    bm_bc = {}
+    for i in range(m):
+        bm_bc[x[i]] = m - 1 - i
+    return bm_bc
+
+def pre_qs_bc(x):
+    m = len(x)
+    qs_bc = {}
+    for i in range(m):
+        qs_bc[x[i]] = m - i
+    return qs_bc
+
+def SMITH(x, y):
+    m, n = len(x), len(y)
+    bm_bc = pre_bm_bc(x)
+    qs_bc = pre_qs_bc(x)
+    j = 0
+    while j <= n - m:
+        if x == y[j:j + m]:
+            print(j)
+        bc = bm_bc.get(y[j + m - 1], m)
+        qs = qs_bc.get(y[j + m], m + 1) if j + m < n else m + 1
+        j += max(bc, qs)
 \end{lstlisting}
 
 %-----------------------------------------------------------
@@ -2075,15 +2461,33 @@ Trong mỗi lần thử, đầu tiên thuật toán so sánh ký tự cuối c�
 
 \subsection{Kiểm nghiệm thuật toán}
 
+Với $x = \texttt{GCAGAGAG}$, $y = \texttt{GCATCGCAGAGAGTATACAGTACG}$:
+
+Pha tiền xử lý:
+
+Bảng Horspool bad-character shift $\text{bmBc}[a]$ -- Raita dịch theo $y[j+m-1]$ nhưng trước đó kiểm tra $y[j]$, $y[j+m-1]$, $y[j+m/2]$ để loại sớm:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$a$ & A & C & G & T \\
+\hline
+$\text{bmBc}[a]$ & 1 & 6 & 2 & 8 \\
+\hline
+\end{tabular}
+\end{center}
+
+Pha tìm kiếm:
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img372.jpg}
-	\caption{Lần 1: Kiểm tra ký tự cuối -- mismatch, dịch 1}
+	\caption{Lần 1: Kiểm tra ký tự cuối -- mismatch, dịch 1 bước}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{img375.jpg}
-	\caption{Lần 2--5: Lần 4 OUTPUT(5)}
+	\caption{Lần 2--5: OUTPUT(5) ở lần 4}
 \end{figure}
 \begin{figure}[H]
 	\centering
@@ -2091,26 +2495,31 @@ Trong mỗi lần thử, đầu tiên thuật toán so sánh ký tự cuối c�
 	\caption{Lần 6--7: Kết thúc}
 \end{figure}
 
+Ta thấy thuật toán Raita thực hiện 18 phép so sánh trong ví dụ trên.
+
 \subsection{Lập trình theo thuật toán}
 
-\begin{lstlisting}[style=CStyle]
-void RAITA(char *x, int m, char *y, int n) {
-    char firstCh, lastCh, middleCh;
-    int j, bmBc[ASIZE];
-    preBmBc(x, m, bmBc);
-    firstCh  = x[0];
-    middleCh = x[m / 2];
-    lastCh   = x[m - 1];
-    j = 0;
-    while (j <= n - m) {
-        if (lastCh   == y[j + m - 1] &&
-            middleCh == y[j + m / 2] &&
-            firstCh  == y[j] &&
-            memcmp(x + 1, y + j + 1, m - 2) == 0)
-            OUTPUT(j);
-        j += bmBc[(unsigned char)y[j + m - 1]];
-    }
-}
+\begin{lstlisting}[style=PythonStyle]
+def pre_bm_bc(x):
+    m = len(x)
+    bm_bc = {}
+    for i in range(m):
+        bm_bc[x[i]] = m - 1 - i
+    return bm_bc
+
+def RAITA(x, y):
+    m, n = len(x), len(y)
+    bm_bc = pre_bm_bc(x)
+    first, last = x[0], x[m - 1]
+    middle = x[m // 2]
+    j = 0
+    while j <= n - m:
+        if (y[j + m - 1] == last and
+                y[j] == first and
+                y[j + m // 2] == middle and
+                x[1:m - 1] == y[j + 1:j + m - 1]):
+            print(j)
+        j += bm_bc.get(y[j + m - 1], m)
 \end{lstlisting}
 
 \end{document}
